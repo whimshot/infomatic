@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+`workon Weather`
+
 autopep=$(autopep8 -dr .)
 
 if [[ -z $autopep ]]
@@ -12,7 +14,6 @@ else
 fi
 
 `nosetests`
-
 if [[ $? != 0 ]]
 then
 	echo "> Tests DID NOT pass !"

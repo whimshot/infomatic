@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+if [ -n $VIRTUAL_ENV ]; then
+    PATH=$VIRTUAL_ENV/bin:$PATH
+fi
+
 autopep=$(autopep8 -dr .)
 
 if [[ -z $autopep ]]
