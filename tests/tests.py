@@ -25,7 +25,7 @@ class TestTodayAttributes(unittest.TestCase):
     def test_today_is_dictionary(self):
         """'today' is a dictionary."""
         try:
-            self.assertTrue(isinstance(self.weather.today, str))
+            self.assertTrue(isinstance(self.weather.today, dict))
         except Exception as e:
             raise
         finally:
