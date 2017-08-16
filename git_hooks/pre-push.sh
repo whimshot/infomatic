@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-if [ -n $VIRTUAL_ENV ]; then
-    PATH=$VIRTUAL_ENV/bin:$PATH
-fi
+
+`workon Weather`
 
 autopep=$(autopep8 -dr .)
 
