@@ -5,8 +5,8 @@ One Paragraph of project description goes here
 ## Designing Weather
 
 ### Weather
-![ScreenShot](weather.png)
-<img src="weather.svg" />
+![Class Diagram](weather.png)
+![Class SVG](weather.svg)
 
 ## Getting Started
 
