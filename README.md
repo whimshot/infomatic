@@ -6,7 +6,7 @@ One Paragraph of project description goes here
 
 ### Weather
 ![ScreenShot](weather.png)
-<img src='weather.svg'>
+<img src="weather.svg" />
 
 ## Getting Started
 
