@@ -5,7 +5,7 @@ One Paragraph of project description goes here
 ## Designing Weather
 
 ### Weather
-![ScreenShot](/weather.svg)
+![ScreenShot](weather.svg)
 
 ## Getting Started
 
