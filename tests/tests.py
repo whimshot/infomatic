@@ -81,7 +81,7 @@ class TestTodayAttributes(unittest.TestCase):
         finally:
             pass
 
-    def test_rain(self):
+    def test_rain_is_dictionary(self):
         """'rain' is a dictionary."""
         try:
             self.assertTrue(isinstance(self.weather.today['rain'], dict))
@@ -90,7 +90,7 @@ class TestTodayAttributes(unittest.TestCase):
         finally:
             pass
 
-    def test_snow(self):
+    def test_snow_is_dictionary(self):
         """'snow' is a dictionary."""
         try:
             self.assertTrue(isinstance(self.weather.today['snow'], dict))
@@ -99,7 +99,7 @@ class TestTodayAttributes(unittest.TestCase):
         finally:
             pass
 
-    def test_wind(self):
+    def test_wind_is_dictionary(self):
         """'wind' is a dictionary."""
         try:
             self.assertTrue(isinstance(self.weather.today['wind'], dict))
@@ -117,7 +117,7 @@ class TestTodayAttributes(unittest.TestCase):
         finally:
             pass
 
-    def test_pressure(self):
+    def test_pressure_is_dictionary(self):
         """'pressure' is a dictionary."""
         try:
             self.assertTrue(isinstance(self.weather.today['pressure'], dict))
@@ -126,7 +126,7 @@ class TestTodayAttributes(unittest.TestCase):
         finally:
             pass
 
-    def test_temperature(self):
+    def test_temperature_is_dictionary(self):
         """'temperature' is a dictionary."""
         try:
             self.assertTrue(isinstance(self.weather.today['temperature'],
@@ -136,7 +136,7 @@ class TestTodayAttributes(unittest.TestCase):
         finally:
             pass
 
-    def test_status(self):
+    def test_status_is_string(self):
         """'status' is a string."""
         try:
             self.assertTrue(isinstance(self.weather.today['status'], str))
@@ -145,7 +145,7 @@ class TestTodayAttributes(unittest.TestCase):
         finally:
             pass
 
-    def test_detailed_status(self):
+    def test_detailed_status_is_string(self):
         """detailed_status is a string."""
         try:
             self.assertTrue(isinstance(self.weather.today['detailed_status'],
@@ -164,7 +164,7 @@ class TestTodayAttributes(unittest.TestCase):
         finally:
             pass
 
-    def test_weather_icon_name(self):
+    def test_weather_icon_name_is_string(self):
         """weather_icon_name is a string."""
         try:
             self.assertTrue(isinstance(self.weather.today['weather_icon_name'],
