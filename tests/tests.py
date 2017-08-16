@@ -1,6 +1,33 @@
 """Testing methods for the Weather class."""
 import unittest
+import pytest
 import weather
+
+
+class TestOWMWeatherDict(unittest.TestCase):
+    """docstring for TestOWMWeatherDict."""
+
+    def setUp(self):
+        """Setup for the tests."""
+        try:
+            self.weather_keys = ['reference_time', 'sunset_time',
+                                 'sunrise_time', 'clouds', 'rain',
+                                 'snow', 'wind', 'humidity', 'pressure',
+                                 'temperature', 'status', 'detailed_status',
+                                 'weather_code', 'weather_icon_name',
+                                 'visibility_distance', 'dewpoint',
+                                 'humidex', 'heat_index']
+            self.weather = weather.Weather()
+            self.weatherdict = self.weather.today
+        except Exception as e:
+            raise
+        finally:
+            pass
+
+    def test_properties(self):
+        self.assertTrue(isinstance(self.weatherdict.temperature, float))
+        self.assertTrue(isinstance(self.weatherdict.temp_high, float))
+        self.assertTrue(isinstance(self.weatherdict.temp_low, float))
 
 
 class TestTodayAttributes(unittest.TestCase):

@@ -1,5 +1,6 @@
 *.conf
 *.ini
+.cache
 __pycache__
 .coverage
 nosetests.json
