@@ -12,7 +12,6 @@ else
 fi
 
 `nosetests`
-
 if [[ $? != 0 ]]
 then
 	echo "> Tests DID NOT pass !"
