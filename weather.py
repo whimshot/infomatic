@@ -2,7 +2,6 @@
 import configparser
 import json
 import pprint
-import time
 
 from pyowm import OWM
 
