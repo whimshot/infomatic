@@ -21,5 +21,5 @@ else
 	echo "> Tests passed !"
 fi
 
-echo "Ready to commit !"
+echo "Ready to push !"
 exit 0
