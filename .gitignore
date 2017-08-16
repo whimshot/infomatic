@@ -1,2 +1,4 @@
 *.conf
+*.ini
 __pycache__
+.coverage

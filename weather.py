@@ -1,7 +1,6 @@
 """Docstring goes here."""
 import configparser
 import json
-import pprint
 
 from pyowm import OWM
 
@@ -34,15 +33,11 @@ class Weather(object):
         try:
             self.__observation = self.owm.weather_at_place('Boston,US')
             self.__forecaster = self.owm.daily_forecast('Boston,US')
-            self.today = self.observation.get_weather()
+            self.today = json.loads(self.__observation.get_weather().to_JSON())
+            self.forecasts = []
+            for fc in self.__forecast.get_weathers():
+                self.forecasts.append(json.loads(fc.to_JSON()))
         except Exception as e:
             raise
         finally:
             pass
-
-
-if __name__ == '__main__':
-    pp = pprint.PrettyPrinter(indent=4)
-    w = Weather()
-    pp.pprint(w.today)
-    pp.pprint(w.forecasts)
