@@ -3,7 +3,7 @@ import unittest
 import weather
 
 
-class TestTodayMethods(unittest.TestCase):
+class TestTodayAttributes(unittest.TestCase):
     """docstring for TestTodaysWeather."""
 
     def setUp(self):
@@ -22,7 +22,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_today_is_dict(self):
+    def test_today_is_dictionary(self):
         """'today' is a dictionary."""
         try:
             self.assertTrue(isinstance(self.weather.today, dict))
@@ -31,7 +31,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_today_has_keys(self):
+    def test_today_has_necessary_keys(self):
         """'today' has appropriate keys."""
         try:
             self.assertEqual(self.weather_keys,
@@ -41,7 +41,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_reference_time(self):
+    def test_reference_time_is_int(self):
         """reference_time is an int."""
         try:
             self.assertTrue(int(self.weather.today['reference_time']))
@@ -50,7 +50,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_sunset_time(self):
+    def test_sunset_time_is_int_or_none(self):
         """sunset_time is an int or none."""
         try:
             self.assertTrue(isinstance(self.weather.today['sunset_time'], int)
@@ -61,7 +61,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_sunrise_time(self):
+    def test_sunrise_time_is_int_or_none(self):
         """sunrise_time is an int or none."""
         try:
             self.assertTrue(isinstance(self.weather.today['sunrise_time'], int)
@@ -72,7 +72,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_clouds(self):
+    def test_clouds_is_int(self):
         """'clouds' is an int."""
         try:
             self.assertTrue(int(self.weather.today['clouds']))
@@ -108,7 +108,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_humidity(self):
+    def test_humidity_is_int(self):
         """'humidity' is an int."""
         try:
             self.assertTrue(int(self.weather.today['humidity']))
@@ -155,7 +155,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_weather_code(self):
+    def test_weather_code_is_int(self):
         """weather_code is an int."""
         try:
             self.assertTrue(int(self.weather.today['weather_code']))
@@ -174,7 +174,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_dewpoint(self):
+    def test_dewpoint_is_float_or_none(self):
         """'dewpoint' is a float or None."""
         try:
             self.assertTrue(isinstance(self.weather.today['dewpoint'], float)
@@ -185,7 +185,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_humidex(self):
+    def test_humidex_is_float_or_none(self):
         """'humidex' is a float or None."""
         try:
             self.assertTrue(isinstance(self.weather.today['humidex'], float)
@@ -196,7 +196,7 @@ class TestTodayMethods(unittest.TestCase):
         finally:
             pass
 
-    def test_heat_index(self):
+    def test_heat_index_is_float_or_none(self):
         """'heat_index' is a float or None."""
         try:
             self.assertTrue(isinstance(self.weather.today['heat_index'], float)
@@ -208,7 +208,7 @@ class TestTodayMethods(unittest.TestCase):
             pass
 
 
-class TestForecastMethods(unittest.TestCase):
+class TestForecastAttributes(unittest.TestCase):
     """docstring for TestForecast."""
 
     def setUp(self):
