@@ -31,16 +31,6 @@ fi
 `pytest -qq 2>&1 >/dev/null`
 if [[ $? != 0 ]]
 then
-	echo "> PEP8 passed !"
-else
-	echo "> PEP8 DID NOT pass !"
-	echo "$autopep" | colordiff
-	exit 1
-fi
-
-`nosetests`
-if [[ $? != 0 ]]
-then
 	echo "> Tests DID NOT pass !"
 	exit 1
 else
