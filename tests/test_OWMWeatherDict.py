@@ -1,5 +1,4 @@
 """Testing methods for the Weather class."""
-import unittest
 import pytest
 import datetime
 now = datetime.datetime.now()
@@ -33,6 +32,7 @@ def test_is_dictionary(weatherdict, weatherdictkeys):
 
 def test_tempuratures(weatherdict):
     """Are the temperatures valid float values."""
+    assert isinstance(weatherdict['temperature'], dict)
     assert isinstance(weatherdict.temperature, float)
     assert -100 <= weatherdict.temperature <= 60
     assert isinstance(weatherdict.temp_high, float)
@@ -67,100 +67,72 @@ def test_sunrise_time(weatherdict):
     assert weatherdict.sunrise_time > int(
         then.strftime('%s')) or weatherdict.sunrise_time is None
 
-# def test_sunset_time_is_int_or_none(self):
-#     """sunset_time is an int or none."""
-#     try:
-#         self.assertTrue(isinstance(self.weather.today['sunset_time'], int)
-#                         or isinstance(self.weather.today['sunset_time'],
-#                                       type(None)))
-#     except Exception as e:
-#         raise
-#     finally:
-#         pass
-#
-#
-# def test_sunrise_time_is_int_or_none(self):
-#     """sunrise_time is an int or none."""
-#     try:
-#         self.assertTrue(isinstance(self.weather.today['sunrise_time'], int)
-#                         or isinstance(self.weather.today['sunrise_time'],
-#                                       type(None)))
-#     except Exception as e:
-#         raise
-#     finally:
-#         pass
-#
-#
-# def test_clouds_is_int(self):
-#     """'clouds' is an int."""
-#     try:
-#         self.assertTrue(int(self.weather.today['clouds']))
-#     except Exception as e:
-#         raise
-#     finally:
-#         pass
-#
-#
-# def test_rain_is_dictionary(self):
-#     """'rain' is a dictionary."""
-#     try:
-#         self.assertTrue(isinstance(self.weather.today['rain'], dict))
-#     except Exception as e:
-#         raise
-#     finally:
-#         pass
-#
-#
-# def test_snow_is_dictionary(self):
-#     """'snow' is a dictionary."""
-#     try:
-#         self.assertTrue(isinstance(self.weather.today['snow'], dict))
-#     except Exception as e:
-#         raise
-#     finally:
-#         pass
-#
-#
-# def test_wind_is_dictionary(self):
-#     """'wind' is a dictionary."""
-#     try:
-#         self.assertTrue(isinstance(self.weather.today['wind'], dict))
-#     except Exception as e:
-#         raise
-#     finally:
-#         pass
-#
-#
-# def test_humidity_is_int(self):
-#     """'humidity' is an int."""
-#     try:
-#         self.assertTrue(int(self.weather.today['humidity']))
-#     except Exception as e:
-#         raise
-#     finally:
-#         pass
-#
-#
-# def test_pressure_is_dictionary(self):
-#     """'pressure' is a dictionary."""
-#     try:
-#         self.assertTrue(isinstance(self.weather.today['pressure'], dict))
-#     except Exception as e:
-#         raise
-#     finally:
-#         pass
-#
-#
-# def test_temperature_is_dictionary(self):
-#     """'temperature' is a dictionary."""
-#     try:
-#         self.assertTrue(isinstance(self.weather.today['temperature'],
-#                                    dict))
-#     except Exception as e:
-#         raise
-#     finally:
-#         pass
-#
+
+def test_clouds(weatherdict):
+    """Is the reference_time a valid int value."""
+    assert isinstance(weatherdict['clouds'], int)
+    assert isinstance(weatherdict.clouds, int)
+    assert 0 <= weatherdict.clouds <= 100
+
+
+def test_rain(weatherdict):
+    """Is the rain a dict."""
+    assert isinstance(weatherdict['rain'], dict)
+    assert isinstance(weatherdict.rain,
+                      float) or isinstance(weatherdict.rain, type(None))
+
+
+def test_snow(weatherdict):
+    """Is the snow a dict."""
+    assert isinstance(weatherdict['snow'], dict)
+    assert isinstance(weatherdict.snow,
+                      float) or isinstance(weatherdict.snow, type(None))
+
+
+def test_wind(weatherdict):
+    """Is the wind a dict."""
+    assert isinstance(weatherdict['wind'], dict)
+    assert isinstance(weatherdict.wind, dict)
+
+
+def test_humidity(weatherdict):
+    """Test the pressure."""
+    assert isinstance(weatherdict['humidity'], int)
+    assert isinstance(weatherdict.humidity, int)
+    assert 0 <= weatherdict.humidity <= 100
+
+
+def test_pressure(weatherdict):
+    """Test the pressure."""
+    assert isinstance(weatherdict['pressure'], dict)
+    assert isinstance(weatherdict.pressure, float)
+
+
+def test_wind(weatherdict):
+    """Test the wind."""
+    assert isinstance(weatherdict['wind'], dict)
+    assert isinstance(weatherdict.wind_speed, float)
+    assert isinstance(weatherdict.wind_deg, float)
+    assert 0 <= weatherdict.wind_deg <= 360
+
+
+def test_status(weatherdict):
+    """Test the status."""
+    assert isinstance(weatherdict['status'], str)
+    assert isinstance(weatherdict.status, str)
+
+
+def test_detailed_status(weatherdict):
+    """Test the detailed_status."""
+    assert isinstance(weatherdict['detailed_status'], str)
+    assert isinstance(weatherdict.detailed_status, str)
+
+
+def test_status_icon_url(weatherdict):
+    """Test the status_icon_url."""
+    assert isinstance(weatherdict['weather_icon_name'], str)
+    assert isinstance(weatherdict.status_icon_url, str)
+
 #
 # def test_status_is_string(self):
 #     """'status' is a string."""

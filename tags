@@ -1,2 +1,0 @@
-float	weather.py	/^        _temp = float(format(self['temperature']['/
-set	weatherui.py	/^Config.set('graphics', 'resizable', 0)$/

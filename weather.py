@@ -1,6 +1,7 @@
 """Docstring goes here."""
 import configparser
 import json
+import pprint
 
 from pyowm import OWM
 
@@ -62,6 +63,102 @@ class OWMWeatherDict(dict):
     def sunrise_time(self):
         return self['sunrise_time']
 
+    @property
+    def humidity(self):
+        pass
+
+    @humidity.getter
+    def humidity(self):
+        return self['humidity']
+
+    @property
+    def pressure(self):
+        pass
+
+    @pressure.getter
+    def pressure(self):
+        _pressure = float(self['pressure']['press'])
+        return _pressure
+
+    @property
+    def rain(self):
+        pass
+
+    @rain.getter
+    def rain(self):
+        if any(self['rain']):
+            _rain = float(self['rain']['3h'])
+            return _rain
+        else:
+            return None
+
+    @property
+    def snow(self):
+        pass
+
+    @snow.getter
+    def snow(self):
+        if any(self['snow']):
+            _snow = float(self['snow']['3h'])
+            return _snow
+        else:
+            return None
+
+    @property
+    def clouds(self):
+        pass
+
+    @clouds.getter
+    def clouds(self):
+        _clouds = int(self['clouds'])
+        return _clouds
+
+    @property
+    def wind_speed(self):
+        pass
+
+    @wind_speed.getter
+    def wind_speed(self):
+        _wind_speed = float(self['wind']['speed'])
+        return _wind_speed
+
+    @property
+    def wind_deg(self):
+        pass
+
+    @wind_deg.getter
+    def wind_deg(self):
+        _wind_deg = float(self['wind']['deg'])
+        return _wind_deg
+
+    @property
+    def status(self):
+        pass
+
+    @status.getter
+    def status(self):
+        _status = self['status'].title()
+        return _status
+
+    @property
+    def detailed_status(self):
+        pass
+
+    @detailed_status.getter
+    def detailed_status(self):
+        _detailed_status = self['detailed_status'].title()
+        return _detailed_status
+
+    @property
+    def status_icon_url(self):
+        pass
+
+    @status_icon_url.getter
+    def status_icon_url(self):
+        _status_icon_url = 'http://openweathermap.org/img/w/' + \
+            self['weather_icon_name'] + '.png'
+        return _status_icon_url
+
 
 class Weather(object):
     """docstring for Weather."""
@@ -103,6 +200,7 @@ class Weather(object):
 
 
 if __name__ == '__main__':
+    pp = pprint.PrettyPrinter(indent=4)
     w = Weather()
-    print(w.today)
-    print(w.today.temperature)
+    pp.pprint(w.today)
+    pp.pprint(w.today.temperature)

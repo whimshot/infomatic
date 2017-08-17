@@ -1,10 +1,30 @@
 #:kivy 1.10.0
 
+<AsyncImage>:
+    size_hint: [0.25, 0.5]
+
 <TodayTitle>:
     size_hint: (1, 0.1)
     color: [0, 1, 0, 1]
 
+<TodayLabel>:
+    text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+    size_hint: (0.25, 0.5)
+
+<TodayHeader>:
+    text_size: self.size
+    halign: 'center'
+    valign: 'middle'
+    size_hint: (0.5, 0.5)
+
+<TodayGrid>:
+    cols: 2
+    spacing: [16, 0]
+
 <TodayBox>:
     orientation: 'vertical'
+    size_hint: (0.5, 1.0)
 
 <WeatherBox>:
