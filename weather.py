@@ -175,10 +175,9 @@ class Weather(object):
             self.__forecaster = self.owm.daily_forecast('Boston,US')
             self.today = OWMWeatherDict(json.loads(
                 self.__observation.get_weather().to_JSON()))
-            self.__forecast = self.__forecaster.get_forecast()
-            self.forecasts = []
-            for fc in self.__forecast.get_weathers():
-                self.forecasts.append(json.loads(fc.to_JSON()))
+            self.forecasts = [OWMWeatherDict(json.loads(
+                fc.to_JSON())) for fc
+                in self.__forecaster.get_forecast().get_weathers()]
         except Exception as e:
             raise
         finally:
@@ -204,3 +203,4 @@ if __name__ == '__main__':
     w = Weather()
     pp.pprint(w.today)
     pp.pprint(w.today.temperature)
+    pp.pprint(w.forecasts)
