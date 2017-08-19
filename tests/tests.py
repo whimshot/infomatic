@@ -1,6 +1,5 @@
 """Testing methods for the Weather class."""
 import unittest
-import pytest
 import weather
 
 

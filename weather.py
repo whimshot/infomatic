@@ -1,9 +1,42 @@
 """Docstring goes here."""
 import configparser
 import json
+import logging
+import logging.handlers
 import pprint
 
 from pyowm import OWM
+
+
+config = configparser.ConfigParser()
+config.read('weather.conf')
+
+MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
+ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
+LOGGERNAME = config.get('Logging', 'loggername')
+
+# create logger
+logger = logging.getLogger(LOGGERNAME)
+# logger.setLevel(logging.INFO)
+logger.setLevel(logging.INFO)
+# create file handler which logs even debug messages
+logger_fh = logging.handlers.RotatingFileHandler(LOGGERNAME + '.log',
+                                                 maxBytes=MAXLOGSIZE,
+                                                 backupCount=ROTATIONCOUNT)
+logger_fh.setLevel(logging.DEBUG)
+# create console handler with a higher log level
+logger_ch = logging.StreamHandler()
+logger_ch.setLevel(logging.ERROR)
+# create formatter and add it to the handlers
+logger_formatter = logging.Formatter('%(asctime)s'
+                                     + ' %(levelname)s'
+                                     + ' %(name)s[%(process)d]'
+                                     + ' %(message)s')
+logger_fh.setFormatter(logger_formatter)
+logger_ch.setFormatter(logger_formatter)
+# add the handlers to the logger
+logger.addHandler(logger_fh)
+logger.addHandler(logger_ch)
 
 
 class OWMWeatherDict(dict):
@@ -18,7 +51,10 @@ class OWMWeatherDict(dict):
 
     @temperature.getter
     def temperature(self):
-        _temp = float(format(self['temperature']['temp'] - 273.15, '.2f'))
+        if 'temp' in self['temperature']:
+            _temp = float(format(self['temperature']['temp'] - 273.15, '.2f'))
+        elif 'day' in self['temperature']:
+            _temp = float(format(self['temperature']['day'] - 273.15, '.2f'))
         return _temp
 
     @property
@@ -27,7 +63,11 @@ class OWMWeatherDict(dict):
 
     @temp_high.getter
     def temp_high(self):
-        _temp = float(format(self['temperature']['temp_max'] - 273.15, '.2f'))
+        if 'temp' in self['temperature']:
+            _temp = float(format(self['temperature']
+                                 ['temp_max'] - 273.15, '.2f'))
+        elif 'day' in self['temperature']:
+            _temp = float(format(self['temperature']['max'] - 273.15, '.2f'))
         return _temp
 
     @property
@@ -36,7 +76,11 @@ class OWMWeatherDict(dict):
 
     @temp_low.getter
     def temp_low(self):
-        _temp = float(format(self['temperature']['temp_min'] - 273.15, '.2f'))
+        if 'temp' in self['temperature']:
+            _temp = float(format(self['temperature']
+                                 ['temp_min'] - 273.15, '.2f'))
+        elif 'day' in self['temperature']:
+            _temp = float(format(self['temperature']['min'] - 273.15, '.2f'))
         return _temp
 
     @property
@@ -53,7 +97,10 @@ class OWMWeatherDict(dict):
 
     @sunset_time.getter
     def sunset_time(self):
-        return self['sunset_time']
+        if self['sunset_time'] == 0:
+            return None
+        else:
+            return self['sunset_time']
 
     @property
     def sunrise_time(self):
@@ -87,7 +134,8 @@ class OWMWeatherDict(dict):
     @rain.getter
     def rain(self):
         if any(self['rain']):
-            _rain = float(self['rain']['3h'])
+            for i in self['rain']:
+                _rain = float(self['rain'][i])
             return _rain
         else:
             return None
