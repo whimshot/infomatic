@@ -6,8 +6,8 @@ then = now - datetime.timedelta(days=90)
 
 @pytest.fixture
 def busstop():
-    import mbta
-    busstop = mbta.BusStop('599')
+    from mbta.mbta import BusStop
+    busstop = BusStop('599')
     return busstop
 
 

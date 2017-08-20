@@ -7,9 +7,9 @@ then = now - datetime.timedelta(days=90)
 
 @pytest.fixture
 def weatherdict():
-    import weather
-    weather = weather.Weather()
-    return weather.forecasts[0]
+    from weather.weather import Weather
+    weather = Weather()
+    return weather.today
 
 
 @pytest.fixture

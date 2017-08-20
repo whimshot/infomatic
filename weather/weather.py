@@ -9,34 +9,42 @@ from pyowm import OWM
 
 
 config = configparser.ConfigParser()
-config.read('weather.conf')
 
-MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
-ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
-LOGGERNAME = config.get('Logging', 'loggername')
+try:
+    assert __name__ == '__main__'
+    config.read('weather.conf')
+except AssertionError:
+    logger = logging.getLogger(__name__)
+    config.read('weather/weather.conf')
+else:
+    MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
+    ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
+    LOGFILE = config.get('Logging', 'logfile')
 
-# create logger
-logger = logging.getLogger(LOGGERNAME)
-# logger.setLevel(logging.INFO)
-logger.setLevel(logging.INFO)
-# create file handler which logs even debug messages
-logger_fh = logging.handlers.RotatingFileHandler(LOGGERNAME + '.log',
-                                                 maxBytes=MAXLOGSIZE,
-                                                 backupCount=ROTATIONCOUNT)
-logger_fh.setLevel(logging.DEBUG)
-# create console handler with a higher log level
-logger_ch = logging.StreamHandler()
-logger_ch.setLevel(logging.ERROR)
-# create formatter and add it to the handlers
-logger_formatter = logging.Formatter('%(asctime)s'
-                                     + ' %(levelname)s'
-                                     + ' %(name)s[%(process)d]'
-                                     + ' %(message)s')
-logger_fh.setFormatter(logger_formatter)
-logger_ch.setFormatter(logger_formatter)
-# add the handlers to the logger
-logger.addHandler(logger_fh)
-logger.addHandler(logger_ch)
+    # create logger
+    logger = logging.getLogger(__name__)
+    # logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
+    # create file handler which logs even debug messages
+    logger_fh = logging.handlers.RotatingFileHandler(LOGFILE,
+                                                     maxBytes=MAXLOGSIZE,
+                                                     backupCount=ROTATIONCOUNT)
+    logger_fh.setLevel(logging.DEBUG)
+    # create console handler with a higher log level
+    logger_ch = logging.StreamHandler()
+    logger_ch.setLevel(logging.ERROR)
+    # create formatter and add it to the handlers
+    logger_formatter = logging.Formatter('%(asctime)s'
+                                         + ' %(levelname)s'
+                                         + ' %(name)s[%(process)d]'
+                                         + ' %(message)s')
+    logger_fh.setFormatter(logger_formatter)
+    logger_ch.setFormatter(logger_formatter)
+    # add the handlers to the logger
+    logger.addHandler(logger_fh)
+    logger.addHandler(logger_ch)
+finally:
+    pass
 
 
 class OWMWeatherDict(dict):
@@ -217,7 +225,7 @@ class Weather(object):
         try:
             self.config = configparser.ConfigParser()
             self.config.read('weather.conf')
-            APIKEY = self.config.get('OpenWeatherMap', 'apikey')
+            APIKEY = config.get('OpenWeatherMap', 'apikey')
             self.owm = OWM(APIKEY)
             self.__observation = self.owm.weather_at_place('Boston,US')
             self.__forecaster = self.owm.daily_forecast('Boston,US')

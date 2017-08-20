@@ -19,7 +19,7 @@ try:
     config.read('mbta.conf')
 except AssertionError:
     logger = logging.getLogger(__name__)
-    config.read('mbta.conf')
+    config.read('mbta/mbta.conf')
     # MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
     # ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
     # LOGGERNAME = config.get('Logging', 'loggername')

@@ -7,3 +7,4 @@ nosetests.json
 tags
 .tags
 *.log*
+.DS_Store

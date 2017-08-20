@@ -1,5 +1,8 @@
 """Docstring goes here."""
+import configparser
 import datetime
+import logging
+import logging.handlers
 
 from dateutil import tz
 from kivy.app import App
@@ -11,12 +14,48 @@ from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import AsyncImage
 from kivy.uix.label import Label
 
-import weather
-
 Config.set('graphics', 'resizable', 0)
 Config.set('graphics', 'width', 800)
 Config.set('graphics', 'height', 480)
 Window.size = (800, 480)
+config = configparser.ConfigParser()
+
+try:
+    assert __name__ == '__main__'
+    config.read('weather/weather.conf')
+except AssertionError:
+    print('mbtaui assertion error')
+    logger = logging.getLogger(__name__)
+    config.read('weather/weather.conf')
+else:
+    MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
+    ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
+    LOGFILE = config.get('Logging', 'logfile')
+
+    # create logger
+    logger = logging.getLogger(__name__)
+    # logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
+    # create file handler which logs even debug messages
+    logger_fh = logging.handlers.RotatingFileHandler(LOGFILE,
+                                                     maxBytes=MAXLOGSIZE,
+                                                     backupCount=ROTATIONCOUNT)
+    logger_fh.setLevel(logging.DEBUG)
+    # create console handler with a higher log level
+    logger_ch = logging.StreamHandler()
+    logger_ch.setLevel(logging.ERROR)
+    # create formatter and add it to the handlers
+    logger_formatter = logging.Formatter('%(asctime)s'
+                                         + ' %(levelname)s'
+                                         + ' %(name)s[%(process)d]'
+                                         + ' %(message)s')
+    logger_fh.setFormatter(logger_formatter)
+    logger_ch.setFormatter(logger_formatter)
+    # add the handlers to the logger
+    logger.addHandler(logger_fh)
+    logger.addHandler(logger_ch)
+finally:
+    import weather
 
 deg_cel = u' \N{DEGREE SIGN}C'
 
