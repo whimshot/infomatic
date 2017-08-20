@@ -18,36 +18,44 @@ kivy.config.Config.set('graphics', 'height', 480)
 kivy.core.window.Window.size = (800, 480)
 
 config = configparser.ConfigParser()
-config.read('maps/maps.conf')
 
 pp = pprint.PrettyPrinter(indent=4)
 
-MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
-ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
-LOGGERNAME = config.get('Logging', 'loggername')
+try:
+    assert __name__ == '__main__'
+    config.read('maps.conf')
+except AssertionError:
+    logger = logging.getLogger(__name__)
+    config.read('infomatic.conf')
+else:
+    pass
+finally:
+    MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
+    ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
+    LOGFILE = config.get('Logging', 'logfile')
 
-# create logger
-logger = logging.getLogger(LOGGERNAME)
-# logger.setLevel(logging.INFO)
-logger.setLevel(logging.DEBUG)
-# create file handler which logs even debug messages
-logger_fh = logging.handlers.RotatingFileHandler(LOGGERNAME + '.log',
-                                                 maxBytes=MAXLOGSIZE,
-                                                 backupCount=ROTATIONCOUNT)
-logger_fh.setLevel(logging.DEBUG)
-# create console handler with a higher log level
-logger_ch = logging.StreamHandler()
-logger_ch.setLevel(logging.ERROR)
-# create formatter and add it to the handlers
-logger_formatter = logging.Formatter('%(asctime)s'
-                                     + ' %(levelname)s'
-                                     + ' %(name)s[%(process)d]'
-                                     + ' %(message)s')
-logger_fh.setFormatter(logger_formatter)
-logger_ch.setFormatter(logger_formatter)
-# add the handlers to the logger
-logger.addHandler(logger_fh)
-logger.addHandler(logger_ch)
+    # create logger
+    logger = logging.getLogger(__name__)
+    # logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
+    # create file handler which logs even debug messages
+    logger_fh = logging.handlers.RotatingFileHandler(LOGFILE,
+                                                     maxBytes=MAXLOGSIZE,
+                                                     backupCount=ROTATIONCOUNT)
+    logger_fh.setLevel(logging.DEBUG)
+    # create console handler with a higher log level
+    logger_ch = logging.StreamHandler()
+    logger_ch.setLevel(logging.ERROR)
+    # create formatter and add it to the handlers
+    logger_formatter = logging.Formatter('%(asctime)s'
+                                         + ' %(levelname)s'
+                                         + ' %(name)s[%(process)d]'
+                                         + ' %(message)s')
+    logger_fh.setFormatter(logger_formatter)
+    logger_ch.setFormatter(logger_formatter)
+    # add the handlers to the logger
+    logger.addHandler(logger_fh)
+    logger.addHandler(logger_ch)
 
 
 class OurMapSource(kivy.garden.mapview.MapSource):
@@ -57,17 +65,14 @@ class OurMapSource(kivy.garden.mapview.MapSource):
         """Put together MapLayout."""
         super().__init__(**kwargs)
         try:
-            self.logger = logging.getLogger(LOGGERNAME + '.' + __name__ + '.'
-                                            + self.__class__.__name__)
-
-            self.logger.info('Instantiating %s.', self.__class__.__name__)
+            logger.info('Instantiating %s.', self.__class__.__name__)
             _useless = ['osm', 'osm-hot', 'osm-de', 'osm-fr', 'cyclemap',
                         'thunderforest-cycle', 'thunderforest-transport',
                         'thunderforest-landscape',
                         'thunderforest-outdoors']
             openstreetmap = self.providers['osm']
             for _map in _useless:
-                self.logger.debug('deleting %s', _map)
+                logger.debug('deleting %s', _map)
                 del self.providers[_map]
             self.providers['Open Street Map'] = openstreetmap
             for mymap in ['transport', 'landscape',
@@ -85,14 +90,14 @@ class OurMapSource(kivy.garden.mapview.MapSource):
                 CACHE_KEY = config.get('Thunderforest', map_cache)
                 MAP_NAME = config.get('Thunderforest', map_name_key)
                 self.map_name = MAP_NAME
-                self.logger.info('Setting up map source: {0}'.format(URL))
+                logger.info('Setting up map source: {0}'.format(URL))
                 self.providers[MAP_NAME] = (0, 0, 17, URL, ATTRIBUTION)
         except Exception:
-            self.logger.exception(
+            logger.exception(
                 'Failed to instantiate {}.'.format(self.__class__.__name__))
         finally:
             providers = '\n\n' + pp.pformat(self.providers)
-            self.logger.info(providers)
+            logger.info(providers)
 
 
 class OurMapView(kivy.garden.mapview.MapView):
@@ -118,13 +123,10 @@ class MapBar(kivy.uix.boxlayout.BoxLayout):
         """Put together MapBar."""
         super().__init__(**kwargs)
         try:
-            self.logger = logging.getLogger(LOGGERNAME + '.' + __name__ + '.'
-                                            + self.__class__.__name__)
-
-            self.logger.debug('Setting up {0}.'.format(
+            logger.debug('Setting up {0}.'.format(
                 self.__class__.__name__))
         except Exception:
-            self.logger.exception(
+            logger.exception(
                 'Failed to instantiate {}.'.format(self.__class__.__name__))
         finally:
             pass
@@ -142,13 +144,10 @@ class MapLayout(kivy.uix.relativelayout.RelativeLayout):
         """Put together MapLayout."""
         super().__init__(**kwargs)
         try:
-            self.logger = logging.getLogger(LOGGERNAME + '.' + __name__ + '.'
-                                            + self.__class__.__name__)
-
-            self.logger.debug('Setting up {0}.'.format(
+            logger.debug('Setting up {0}.'.format(
                 self.__class__.__name__))
         except Exception:
-            self.logger.exception(
+            logger.exception(
                 'Failed to instantiate {}.'.format(self.__class__.__name__))
         finally:
             pass
@@ -161,13 +160,9 @@ class MapsApp(kivy.app.App):
         """Build that InforMaticApp."""
         super().__init__(**kwargs)
         try:
-            self.logger = \
-                logging.getLogger(LOGGERNAME
-                                  + self.__class__.__name__)
-
-            self.logger.info("Creating an instance of " + __name__)
+            logger.info("Creating an instance of " + __name__)
         except Exception:
-            self.logger.exception("Caught exception.")
+            logger.exception("Caught exception.")
         finally:
             pass
 

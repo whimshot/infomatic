@@ -21,12 +21,13 @@ config = configparser.ConfigParser()
 
 try:
     assert __name__ == '__main__'
-    config.read('mbta/mbta.conf')
+    config.read('mbta.conf')
 except AssertionError:
-    print('mbtaui assertion error')
     logger = logging.getLogger(__name__)
-    config.read('mbta/mbta.conf')
+    config.read('infomatic.conf')
 else:
+    pass
+finally:
     MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
     ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
     LOGFILE = config.get('Logging', 'logfile')
@@ -53,7 +54,6 @@ else:
     # add the handlers to the logger
     logger.addHandler(logger_fh)
     logger.addHandler(logger_ch)
-finally:
     import mbta.mbta
 
 

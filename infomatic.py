@@ -22,6 +22,76 @@ kivy.config.Config.set('graphics', 'height', 480)
 kivy.core.window.Window.size = (800, 480)
 config = configparser.ConfigParser()
 
+config = configparser.ConfigParser()
+
+try:
+    assert __name__ == '__main__'
+    config.read('infomatic.conf')
+except AssertionError:
+    logger = logging.getLogger(__name__)
+    config.read('infomatic.conf')
+else:
+    pass
+finally:
+    MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
+    ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
+    LOGFILE = config.get('Logging', 'logfile')
+
+    # create logger
+    logger = logging.getLogger(__name__)
+    # logger.setLevel(logging.INFO)
+    logger.setLevel(logging.DEBUG)
+    # create file handler which logs even debug messages
+    logger_fh = logging.handlers.RotatingFileHandler(LOGFILE,
+                                                     maxBytes=MAXLOGSIZE,
+                                                     backupCount=ROTATIONCOUNT)
+    logger_fh.setLevel(logging.DEBUG)
+    # create console handler with a higher log level
+    logger_ch = logging.StreamHandler()
+    logger_ch.setLevel(logging.ERROR)
+    # create formatter and add it to the handlers
+    logger_formatter = logging.Formatter('%(asctime)s'
+                                         + ' %(levelname)s'
+                                         + ' %(name)s[%(process)d]'
+                                         + ' %(message)s')
+    logger_fh.setFormatter(logger_formatter)
+    logger_ch.setFormatter(logger_formatter)
+    # add the handlers to the logger
+    logger.addHandler(logger_fh)
+    logger.addHandler(logger_ch)
+
+
+class TglBtn(kivy.uix.togglebutton.ToggleButton):
+    """The Carousel to hold our information slides."""
+
+    def __init__(self, **kwargs):
+        """Build that Weather Slide."""
+        super(TglBtn, self).__init__(**kwargs)
+        try:
+            self.logger = \
+                logging.getLogger('InfoBox.'
+                                  + self.__class__.__name__)
+
+            self.logger.debug("Creating an instance of " +
+                              self.__class__.__name__)
+            self.text = 'Scroll'
+        except Exception:
+            self.logger.exception("Caught exception.")
+        finally:
+            pass
+
+    def toggle(self):
+        """Toggle that button."""
+        try:
+            if self.state == 'normal':
+                self.text = 'Scroll'
+            else:
+                self.text = 'Scrolling'
+        except Exception:
+            raise
+        finally:
+            pass
+
 
 class TglBtn(kivy.uix.togglebutton.ToggleButton):
     """The Carousel to hold our information slides."""
