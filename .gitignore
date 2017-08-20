@@ -1,7 +1,9 @@
 *.conf
 *.ini
-*.log*
-.tags
 .cache
 __pycache__
-cache
+.coverage
+nosetests.json
+tags
+.tags
+*.log*

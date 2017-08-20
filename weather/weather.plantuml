@@ -1,0 +1,119 @@
+@startuml
+
+skinparam class {
+    BackgroundColor<< kivy.uix.label.Label >> PaleGreen
+  	ArrowColor<< kivy.uix.label.Label >> SeaGreen
+  	BorderColor<< kivy.uix.label.Label >> Green
+    BackgroundColor<< kivy.uix.gridlayout.GridLayout >> PaleGreen
+  	ArrowColor<< kivy.uix.gridlayout.GridLayout >> SeaGreen
+  	BorderColor<< kivy.uix.gridlayout.GridLayout >> Green
+    BackgroundColor<< kivy.uix.boxlayout.BoxLayout >> PaleGreen
+  	ArrowColor<< kivy.uix.boxlayout.BoxLayout >> SeaGreen
+  	BorderColor<< kivy.uix.boxlayout.BoxLayout >> Green
+    BackgroundColor<< kivy.uix.image.AsyncImage >> PaleGreen
+  	ArrowColor<< kivy.uix.image.AsyncImage >> SeaGreen
+  	BorderColor<< kivy.uix.image.AsyncImage >> Green
+    BackgroundColor<< object >> Cyan
+  	ArrowColor<< object >> SeaGreen
+  	BorderColor<< object >> DarkBlue
+    BackgroundColor<< dict >> Cyan
+  	ArrowColor<< dict >> SeaGreen
+  	BorderColor<< dict >> DarkBlue
+}
+
+
+namespace weather.weather {
+
+    class Weather<< object >> {
+        + pyowm.webapi25.owm25.OWM25 owm
+        + pyowm.webapi25.forecaster.Forecaster forecaster
+        + pyowm.webapi25.forecast.Forecast forecast
+        + pyowm.webapi25.observation.Observation observation
+        + dict today
+        + [dict] forecasts
+    }
+
+    class row << (D,orchid) dict >> {
+        status: kivy.uix.label.Label
+        icon: kivy.uix.image.AsyncImage
+        high: kivy.uix.label.Label
+        low: kivy.uix.label.Label
+        current: kivy.uix.label.Label
+    }
+
+    class grid << (D,orchid) dict >> {
+        status: row
+        icon: row
+        high: row
+        low: row
+        current: row
+    }
+    row *-- grid
+}
+
+namespace weather.weatherui {
+
+    class NumericLabel<< kivy.uix.label.Label >> #palegreen {
+        + str text
+    }
+
+    class StatusLabel<< kivy.uix.label.Label >> {
+        + str text
+    }
+
+    class DayLabel<< kivy.uix.label.Label >> {
+        + str text
+    }
+
+    class ForecastIcon<< kivy.uix.image.AsyncImage >> {
+        + str source
+    }
+
+    class ForecastGrid<< kivy.uix.gridlayout.GridLayout >> {
+        + Weather weather
+        + dict widgets
+    }
+
+    class TodayGrid<< kivy.uix.gridlayout.GridLayout >> {
+        + Weather weather
+        + dict widgets
+    }
+
+    class TodayTitle<< kivy.uix.label.Label >> {
+        + str text
+    }
+
+    class ForecastTitle<< kivy.uix.label.Label >> {
+        + str text
+    }
+
+    class TodayBox << kivy.uix.boxlayout.BoxLayout >> {
+        + TodayTitle title
+        + TodayGrid grid
+    }
+
+    class ForecastBox << kivy.uix.boxlayout.BoxLayout >> {
+        + ForecastTitle title
+        + ForecastGrid grid
+    }
+
+
+    TodayBox --[#Blue]* TodayTitle
+    TodayBox --[#Blue]* TodayGrid
+    TodayGrid --[#Blue]* NumericLabel
+    TodayGrid --[#Blue]* StatusLabel
+    TodayGrid --[#Blue]* DayLabel
+    TodayGrid --[#Blue]* ForecastIcon
+    ForecastBox --* ForecastTitle
+    ForecastGrid --* NumericLabel
+    ForecastGrid --* StatusLabel
+    ForecastGrid --* DayLabel
+    ForecastGrid --* ForecastIcon
+    ForecastBox --* ForecastGrid
+    weather.weather.row *-[#Blue]- TodayGrid
+    weather.weather.Weather *-[#Blue]- TodayGrid
+    weather.weather.row *-- ForecastGrid
+    weather.weather.Weather *-- ForecastGrid
+}
+
+@enduml
