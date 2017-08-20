@@ -25,8 +25,10 @@ try:
     config.read('weather/weather.conf')
 except AssertionError:
     logger = logging.getLogger(__name__)
-    config.read('weather/weather.conf')
+    config.read('infomatic.conf')
 else:
+    pass
+finally:
     MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
     ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
     LOGFILE = config.get('Logging', 'logfile')
@@ -53,7 +55,6 @@ else:
     # add the handlers to the logger
     logger.addHandler(logger_fh)
     logger.addHandler(logger_ch)
-finally:
     import weather.weather
 
 deg_cel = u' \N{DEGREE SIGN}C'
