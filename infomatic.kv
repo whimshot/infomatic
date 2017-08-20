@@ -1,0 +1,39 @@
+#:kivy 1.10.0
+#:include weather/weather.kv
+#:include mbta/bus.kv
+#:include maps/maps.kv
+
+<ToolBar>:
+    size_hint_y: None
+    height: '48dp'
+    padding: '4dp'
+    spacing: '4dp'
+    canvas:
+        Color:
+            rgba: .2, .2, .2, .6
+        Rectangle:
+            pos: self.pos
+            size: self.size
+    Button:
+        text: 'Weather'
+        on_press: self.parent.parent.carousel.load_slide(self.parent.parent.carousel.weather)
+        background_color: [0, 1, 0, 1]
+    Button:
+        text: 'Buses'
+        on_press: self.parent.parent.carousel.load_slide(self.parent.parent.carousel.bus)
+        background_color: [0, 1, 0, 1]
+    Button:
+        text: 'Map'
+        on_press: self.parent.parent.carousel.load_slide(self.parent.parent.carousel.maps)
+        background_color: [0, 1, 0, 1]
+    Button:
+        text: 'Settings'
+        on_press: app.open_settings()
+        background_color: [.75, 0, .75, 1]
+    Button:
+        text: 'Exit'
+        on_press: app.stop()
+        background_color: [1, 0, 0, 1]
+
+<InfoBox>:
+    orientation: 'vertical'

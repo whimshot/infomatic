@@ -55,7 +55,7 @@ else:
     logger.addHandler(logger_fh)
     logger.addHandler(logger_ch)
 finally:
-    import weather
+    import weather.weather
 
 deg_cel = u' \N{DEGREE SIGN}C'
 
@@ -125,7 +125,7 @@ class TodayGrid(GridLayout):
         try:
             self.from_zone = tz.tzutc()
             self.to_zone = tz.tzlocal()
-            w = weather.Weather()
+            w = weather.weather.Weather()
             wd = w.today
             self.widgets = {}
             _status = TodayLabel(text=wd.detailed_status)
@@ -168,7 +168,7 @@ class TodayGrid(GridLayout):
             _sunset_widget = TodayLabel(text=_sunset.strftime('%I:%M:%S %p'))
             self.add_widget(_sunset_widget)
             self.widgets['sunset_time'] = _sunset_widget
-            weather.logger.info('Today: %s %s %s %s %s %s %s %s %s',
+            weather.weather.logger.info('Today: %s %s %s %s %s %s %s %s %s',
                                 wd.reference_time,
                                 wd.detailed_status, wd.status_icon_url,
                                 str(wd.temp_high),
@@ -185,7 +185,7 @@ class TodayGrid(GridLayout):
 
     def update(self, dt):
         try:
-            w = weather.Weather()
+            w = weather.weather.Weather()
             wd = w.today
             self.widgets['detailed_status'].text = wd.detailed_status
             self.widgets['status_icon_url'].source = wd.status_icon_url
@@ -201,7 +201,7 @@ class TodayGrid(GridLayout):
             _sunset = datetime.datetime.fromtimestamp(wd.sunset_time)
             self.widgets['sunset_time'].text = _sunset.strftime(
                 '%I:%M:%S %p')
-            weather.logger.info('Today Updated: %s %s %s %s %s %s %s %s %s',
+            weather.weather.logger.info('Today Updated: %s %s %s %s %s %s %s %s %s',
                                 wd.reference_time,
                                 wd.detailed_status, wd.status_icon_url,
                                 str(wd.temp_high),
@@ -319,7 +319,7 @@ class ForecastGrid(GridLayout):
             self.add_widget(ForecastHeader(text='Low'))
             self.add_widget(ForecastHeader(text='Pressure'))
             self.add_widget(StatusHeader(text='Forecast'))
-            w = weather.Weather()
+            w = weather.weather.Weather()
             self.grid = []
             for wd in w.forecasts:
                 _row = {}
@@ -348,7 +348,7 @@ class ForecastGrid(GridLayout):
                 self.add_widget(_detailed_status)
                 _row['detailed_status'] = _detailed_status
                 self.grid.append(_row)
-                weather.logger.info('Forecast: %s %s %s %s %s %s %s',
+                weather.weather.logger.info('Forecast: %s %s %s %s %s %s %s',
                                     wd.reference_time,
                                     _date.strftime('%A'), wd.status_icon_url,
                                     str(wd.temp_high),
@@ -363,7 +363,7 @@ class ForecastGrid(GridLayout):
 
     def update(self, dt):
         try:
-            _w = weather.Weather()
+            _w = weather.weather.Weather()
             _forecasts = _w.forecasts
             for wd, row in zip(_forecasts, self.grid):
                 _date = datetime.datetime.fromtimestamp(wd.reference_time)
@@ -375,7 +375,7 @@ class ForecastGrid(GridLayout):
                 row['temp_low'].text = str(wd.temp_low) + deg_cel
                 row['pressure'].text = str(wd.pressure)
                 row['detailed_status'].text = wd.detailed_status
-                weather.logger.info('Forecast: %s %s %s %s %s %s %s',
+                weather.weather.logger.info('Forecast: %s %s %s %s %s %s %s',
                                     wd.reference_time,
                                     _date.strftime('%A'), wd.status_icon_url,
                                     str(wd.temp_high),

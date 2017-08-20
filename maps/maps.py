@@ -18,7 +18,7 @@ kivy.config.Config.set('graphics', 'height', 480)
 kivy.core.window.Window.size = (800, 480)
 
 config = configparser.ConfigParser()
-config.read('maps.conf')
+config.read('maps/maps.conf')
 
 pp = pprint.PrettyPrinter(indent=4)
 
@@ -107,7 +107,7 @@ class OurMapView(kivy.garden.mapview.MapView):
         self.house = kivy.garden.mapview.MapMarker(
             lat=42.291351,
             lon=-71.123314,
-            source='house.png')
+            source='maps/house.png')
         self.add_marker(self.house)
 
 

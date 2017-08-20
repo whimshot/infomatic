@@ -20,32 +20,6 @@ try:
 except AssertionError:
     logger = logging.getLogger(__name__)
     config.read('mbta/mbta.conf')
-    # MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
-    # ROTATIONCOUNT = config.getint('Logging', 'rotationcount')
-    # LOGGERNAME = config.get('Logging', 'loggername')
-    #
-    # # create logger
-    # logger = logging.getLogger(LOGGERNAME)
-    # # logger.setLevel(logging.INFO)
-    # logger.setLevel(logging.DEBUG)
-    # # create file handler which logs even debug messages
-    # logger_fh = logging.handlers.RotatingFileHandler(LOGGERNAME + '.log',
-    #                                                  maxBytes=MAXLOGSIZE,
-    #                                                  backupCount=ROTATIONCOUNT)
-    # logger_fh.setLevel(logging.DEBUG)
-    # # create console handler with a higher log level
-    # logger_ch = logging.StreamHandler()
-    # logger_ch.setLevel(logging.ERROR)
-    # # create formatter and add it to the handlers
-    # logger_formatter = logging.Formatter('%(asctime)s'
-    #                                      + ' %(levelname)s'
-    #                                      + ' %(name)s[%(process)d]'
-    #                                      + ' %(message)s')
-    # logger_fh.setFormatter(logger_formatter)
-    # logger_ch.setFormatter(logger_formatter)
-    # # add the handlers to the logger
-    # logger.addHandler(logger_fh)
-    # logger.addHandler(logger_ch)
 else:
     MAXLOGSIZE = config.getint('Logging', 'maxlogsize')
     ROTATIONCOUNT = config.getint('Logging', 'rotationcount')

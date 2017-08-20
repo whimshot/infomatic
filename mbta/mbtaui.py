@@ -54,7 +54,7 @@ else:
     logger.addHandler(logger_fh)
     logger.addHandler(logger_ch)
 finally:
-    import mbta
+    import mbta.mbta
 
 
 # class BusLabel(kivy.uix.button.Button):
@@ -120,8 +120,8 @@ class BusGrid(kivy.uix.gridlayout.GridLayout):
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         try:
-            self._outbound = mbta.BusStop('599')
-            self._inbound = mbta.BusStop('639')
+            self._outbound = mbta.mbta.BusStop('599')
+            self._inbound = mbta.mbta.BusStop('639')
         except Exception as e:
             raise
         else:
