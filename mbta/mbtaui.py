@@ -23,7 +23,6 @@ try:
     assert __name__ == '__main__'
     config.read('mbta/mbta.conf')
 except AssertionError:
-    print('mbtaui assertion error')
     logger = logging.getLogger(__name__)
     config.read('mbta/mbta.conf')
 else:
