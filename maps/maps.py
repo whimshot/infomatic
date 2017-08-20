@@ -138,8 +138,6 @@ class MapBar(kivy.uix.boxlayout.BoxLayout):
 class MapLayout(kivy.uix.relativelayout.RelativeLayout):
     """A layout for our maps that includes a toolbar."""
 
-    mapsource = OurMapSource()
-
     def __init__(self, **kwargs):
         """Put together MapLayout."""
         super().__init__(**kwargs)
