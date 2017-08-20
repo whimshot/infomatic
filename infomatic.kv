@@ -3,6 +3,10 @@
 #:include mbta/bus.kv
 #:include maps/maps.kv
 
+<TglBtn>
+    on_press: self.toggle()
+    background_color: [0, 0, 1, 1]
+
 <ToolBar>:
     size_hint_y: None
     height: '48dp'
@@ -14,6 +18,9 @@
         Rectangle:
             pos: self.pos
             size: self.size
+    toggle: toggle
+    TglBtn:
+        id: toggle
     Button:
         text: 'Weather'
         on_press: self.parent.parent.carousel.load_slide(self.parent.parent.carousel.weather)
