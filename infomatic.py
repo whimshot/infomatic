@@ -93,6 +93,38 @@ class TglBtn(kivy.uix.togglebutton.ToggleButton):
             pass
 
 
+class TglBtn(kivy.uix.togglebutton.ToggleButton):
+    """The Carousel to hold our information slides."""
+
+    def __init__(self, **kwargs):
+        """Build that Weather Slide."""
+        super(TglBtn, self).__init__(**kwargs)
+        try:
+            self.logger = \
+                logging.getLogger('InfoBox.'
+                                  + self.__class__.__name__)
+
+            self.logger.debug("Creating an instance of " +
+                              self.__class__.__name__)
+            self.text = 'Scroll'
+        except Exception:
+            self.logger.exception("Caught exception.")
+        finally:
+            pass
+
+    def toggle(self):
+        """Toggle that button."""
+        try:
+            if self.state == 'normal':
+                self.text = 'Scroll'
+            else:
+                self.text = 'Scrolling'
+        except Exception:
+            raise
+        finally:
+            pass
+
+
 class ToolBar(kivy.uix.boxlayout.BoxLayout):
     """docstring for ToolBar."""
 
