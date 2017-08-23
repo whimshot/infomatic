@@ -66,7 +66,7 @@ class TglBtn(kivy.uix.togglebutton.ToggleButton):
 
     def __init__(self, **kwargs):
         """Build that Weather Slide."""
-        super(TglBtn, self).__init__(**kwargs)
+        super().__init__(**kwargs)
         try:
             self.logger = \
                 logging.getLogger('InfoBox.'
