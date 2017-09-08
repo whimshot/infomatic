@@ -1,20 +1,23 @@
 """Docstring goes here."""
+import atexit
 import configparser
 import logging
 import logging.handlers
+import os
 
 import kivy.app
 import kivy.clock
 import kivy.core.window
 import kivy.uix.boxlayout
 import kivy.uix.button
-import kivy.uix.togglebutton
 import kivy.uix.carousel
 import kivy.uix.image
 import kivy.uix.label
-import weather.weatherui
-import mbta.mbtaui
+import kivy.uix.togglebutton
+
 import maps.maps
+import mbta.mbtaui
+import weather.weatherui
 
 kivy.config.Config.set('graphics', 'resizable', 0)
 kivy.config.Config.set('graphics', 'width', 800)
@@ -59,6 +62,21 @@ finally:
     # add the handlers to the logger
     logger.addHandler(logger_fh)
     logger.addHandler(logger_ch)
+
+
+pid = str(os.getpid())
+pidfile = "/tmp/healthstats.pid"
+with open(pidfile, 'w') as pf:
+    pf.write(pid)
+
+
+def cleanup():
+    """Cleanup the pid file."""
+    if os.path.isfile(pidfile):
+        os.unlink(pidfile)
+
+
+atexit.register(cleanup)    # Register with atexit
 
 
 class TglBtn(kivy.uix.togglebutton.ToggleButton):
