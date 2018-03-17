@@ -58,7 +58,7 @@ class BusStop(object):
             # self.logger = \
             #     logging.getLogger(__name__ + '.' + __name__ + '.'
             #                       + self.__class__.__name__)
-            self.api_key = config.get('MBTA', 'apikey')
+            self.api_key = config.get('MBTA', 'v2_apikey')
 
             self.stop = stop
             logger.info('Instantiating %s %s',
@@ -83,7 +83,7 @@ class BusStop(object):
     def predictionsbystop(self):
         "Docstring goes here."
         try:
-            BASE = config.get('MBTA', 'base')
+            BASE = config.get('MBTA', 'v2_base')
             VERSION = config.get('MBTA', 'version')
             _payload = {'api_key': self.api_key,
                         'stop': self.stop,
